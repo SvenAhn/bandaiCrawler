@@ -1,0 +1,38 @@
+group 'bandai crawler'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.5
+
+repositories {
+	mavenCentral()
+}
+
+
+
+task fatJar(type: Jar) {
+	manifest {
+		attributes 'Implementation-Title': 'bandaiCrawler',
+				'Implementation-Version': version,
+				'Main-Class': 'com.sven.hobby.Run'
+
+	}
+
+	baseName = project.name + '-all'
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+	with jar
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	testCompile group: 'junit', name: 'junit', version: '4.11'
+	compile group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
+	compile "org.projectlombok:lombok:1.16.10"
+	compile group: 'com.github.seratch', name: 'jslack', version: '1.0.3'
+	compile group: 'com.google.guava', name: 'guava', version: '11.0.2'
+}
